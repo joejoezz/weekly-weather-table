@@ -2,6 +2,8 @@
 utility functions
 """
 
+from datetime import datetime, timedelta
+
 def get_config(config_path):
     """
     Retrieve the config dictionary from config_path.
@@ -20,3 +22,22 @@ def get_config(config_path):
         raise
 
     return config_dict
+
+
+def get_week(dt_today):
+    # find dates of last week (monday - sunday)
+    sunday_offset = (dt_today.weekday() - 6) % 7
+    week_end = dt_today - timedelta(sunday_offset)
+    week_start = dt_today - timedelta(sunday_offset + 6)
+    return week_start, week_end
+
+
+def get_water_year(dt_today):
+    # find start date of current water year
+    if dt_today.month < 10:
+        wy_start = datetime(dt_today.year-1, 10, 1)
+    else:
+        wy_start = datetime(dt_today.year, 10, 1)
+    return wy_start
+
+
