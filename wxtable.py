@@ -32,9 +32,9 @@ def main(args):
     df['name'] = stn_metadata['name'].values
 
     # check for NCDC file, download if missing
-    ncdc_files = glob.glob('{}*_ncdc.p'.format(config['ARCHIVE_DIR']))
+    ncdc_files = glob.glob('{}ncdc/*_ncdc.p'.format(config['ARCHIVE_DIR']))
     for stnid in df.index.values:
-        ncdc_filename = '{}_ncdc.p'.format(stnid)
+        ncdc_filename = '{}ncdc/{}_ncdc.p'.format(config['ARCHIVE_DIR'], stnid)
         if ncdc_filename not in ncdc_files or args.d_ncdc is True:
             wban = 'USW000{}'.format(stn_metadata[stn_metadata['stnid'] == 'ksea']['wban'].values[0])
             print('no NCDC data for {}, downloading now'.format(stnid))
@@ -94,4 +94,4 @@ def main(args):
                 print("*** Reason: '%s'" % str(e))
                 if config['traceback']:
                     raise
-                    
+    """
