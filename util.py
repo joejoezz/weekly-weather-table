@@ -3,6 +3,8 @@ utility functions
 """
 
 from datetime import datetime, timedelta
+import pandas as pd
+import pdb
 
 def get_config(config_path):
     """
@@ -39,5 +41,18 @@ def get_water_year(dt_today):
     else:
         wy_start = datetime(dt_today.year, 10, 1)
     return wy_start
+
+def count_nulls(series_list):
+    """
+    :param series_list: a list of pandas series
+    :return: number of null values
+    """
+    nulls = 0
+    for ds in series_list:
+        if isinstance(ds, pd.Series):
+            nulls += ds.isnull().sum()
+        else:
+            raise TypeError('util.count_nulls error: Data type must be Pandas Series')
+    return nulls
 
 
